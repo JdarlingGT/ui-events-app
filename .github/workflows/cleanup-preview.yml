@@ -1,0 +1,66 @@
+name: Cleanup Preview
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Remove preview deployment
+        run: |
+          # Remove the PR directory
+          if [ -d "pr-${{ github.event.number }}" ]; then
+            rm -rf pr-${{ github.event.number }}
+            
+            # Update index with remaining PRs
+            echo "# Deploy Previews" > README.md
+            echo "" >> README.md
+            echo "Available preview deployments:" >> README.md
+            for dir in pr-*; do
+              if [ -d "$dir" ]; then
+                pr_num=${dir#pr-}
+                echo "- [PR #$pr_num](./$dir/)" >> README.md
+              fi
+            done
+            
+            git add .
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            
+            if git diff --cached --quiet; then
+              echo "No changes to commit"
+            else
+              git commit -m "Remove preview for closed PR #${{ github.event.number }}"
+              git push origin gh-pages
+            fi
+          fi
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `## 🧹 Preview Cleanup
+              
+              The preview deployment for this PR has been removed.
+              
+              Thank you for your contribution! 🎉`
+            });
