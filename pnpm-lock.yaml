@@ -572,9 +572,6 @@ importers:
       lucide-react:
         specifier: 0.477.0
         version: 0.477.0(react@18.3.1)
-      markdown-wasm:
-        specifier: ^1.2.0
-        version: 1.2.0
       next:
         specifier: 14.3.0-canary.43
         version: 14.3.0-canary.43(@babel/core@7.28.0)(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -614,9 +611,6 @@ importers:
       sonner:
         specifier: ^1.2.3
         version: 1.7.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      swr:
-        specifier: 2.2.6-beta.3
-        version: 2.2.6-beta.3(react@18.3.1)
       tailwind-merge:
         specifier: ^1.12.0
         version: 1.14.0
@@ -8378,11 +8372,6 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  swr@2.2.6-beta.3:
-    resolution: {integrity: sha512-m6Ms7v9QYEoqIaW+5QFBXscNHNa+eVxynrW+WBzJQ3veFxoPdYvAXHKlgRTq5mJkL4Q3JKH/10V6iPvmv9g00Q==}
-    peerDependencies:
-      react: ^16.11.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-0
-
   tailwind-merge@1.14.0:
     resolution: {integrity: sha512-3mFKyCo/MBcgyOTlrY8T7odzZFx+w+qKSMAmdFzRvqBfLlSigU6TZnlFHK0lkMwj9Bj8OYU+9yW9lmGuS0QEnQ==}
 
@@ -16025,7 +16014,8 @@ snapshots:
 
   markdown-table@3.0.4: {}
 
-  markdown-wasm@1.2.0: {}
+  markdown-wasm@1.2.0:
+    optional: true
 
   math-intrinsics@1.1.0: {}
 
@@ -18679,11 +18669,6 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
-
-  swr@2.2.6-beta.3(react@18.3.1):
-    dependencies:
-      react: 18.3.1
-      use-sync-external-store: 1.5.0(react@18.3.1)
 
   tailwind-merge@1.14.0: {}
 

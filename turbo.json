@@ -41,7 +41,9 @@
       "cache": false,
       "outputs": []
     },
-    "typecheck": {},
+    "typecheck": {
+      "outputs": []
+    },
     "dev": {
       "cache": false
     },
@@ -53,8 +55,7 @@
       "outputs": []
     },
     "registry:build": {
-      "cache": false,
-      "outputs": []
+      "outputs": ["registry/**"]
     }
   }
 }
