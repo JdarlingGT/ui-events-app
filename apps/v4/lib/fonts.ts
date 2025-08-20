@@ -6,18 +6,21 @@ import {
 
 import { cn } from "@/lib/utils"
 
-const fontSans = FontSans({
+// Skip font loading for static export builds
+const isStaticExport = process.env.NEXT_OUTPUT_MODE === 'export'
+
+const fontSans = isStaticExport ? { variable: "--font-sans" } : FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 })
 
-const fontMono = FontMono({
+const fontMono = isStaticExport ? { variable: "--font-mono" } : FontMono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ["400"],
 })
 
-const fontInter = Inter({
+const fontInter = isStaticExport ? { variable: "--font-inter" } : Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 })

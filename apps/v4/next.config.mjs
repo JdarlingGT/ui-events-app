@@ -9,6 +9,13 @@ const nextConfig = {
   outputFileTracingIncludes: {
     "/*": ["./registry/**/*"],
   },
+  output: process.env.NEXT_OUTPUT_MODE === 'export' ? 'export' : undefined,
+  trailingSlash: process.env.NEXT_OUTPUT_MODE === 'export',
+  basePath: process.env.NEXT_BASE_PATH || '',
+  experimental: {
+    // Skip external font optimization for static export
+    optimizeFonts: process.env.NEXT_OUTPUT_MODE !== 'export',
+  },
   images: {
     remotePatterns: [
       {

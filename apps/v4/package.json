@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev --turbopack --port 4000",
     "build": "pnpm --filter=shadcn build && next build",
+    "build:static": "pnpm --filter=shadcn build && NEXT_OUTPUT_MODE=export next build",
     "start": "next start --port 4000",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
