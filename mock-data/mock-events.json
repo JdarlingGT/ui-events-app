@@ -1,0 +1,107 @@
+[  
+    {  
+        "post_title": "Essential Training - Eau Claire, WI (Aug 16, 2025)",  
+        "post_type": "training_event",  
+        "post_status": "publish",  
+        "acf_fields": {  
+            "training_type": "Essential In Person",  
+            "training_mode": "In Person",  
+            "training_level": "Essential",  
+            "training_category": "Certification Bundle",  
+            "event_status": "Upcoming",  
+            "event_start_date": "2025-08-16",  
+            "event_end_date": "2025-08-16",  
+            "event_city": "Eau Claire",  
+            "event_state": "WI",  
+            "venue_type": "University",  
+            "linked_instructor": "Robert Stow",  
+            "max_capacity": 50,  
+            "sku": "26025942",  
+            "training_credits": 12  
+        }  
+    },  
+    {  
+        "post_title": "Advanced Training - Indianapolis, IN (Nov 08, 2025)",  
+        "post_type": "training_event",  
+        "post_status": "publish",  
+        "acf_fields": {  
+            "training_type": "Advanced In Person",  
+            "training_mode": "In Person",  
+            "training_level": "Advanced",  
+            "training_category": "CEU Course",  
+            "event_status": "Upcoming",  
+            "event_start_date": "2025-11-08",  
+            "event_end_date": "2025-11-09",  
+            "event_city": "Indianapolis",  
+            "event_state": "IN",  
+            "venue_type": "Clinic",  
+            "linked_instructor": "Mike Ploski",  
+            "max_capacity": 40,  
+            "sku": "26031015",  
+            "training_credits": 14  
+        }  
+    },  
+    {  
+        "post_title": "Essential Training - Merritt Island, FL (Sep 27, 2025)",  
+        "post_type": "training_event",  
+        "post_status": "publish",  
+        "acf_fields": {  
+            "training_type": "Essential In Person",  
+            "training_mode": "In Person",  
+            "training_level": "Essential",  
+            "training_category": "Certification Bundle",  
+            "event_status": "Upcoming",  
+            "event_start_date": "2025-09-27",  
+            "event_end_date": "2025-09-27",  
+            "event_city": "Merritt Island",  
+            "event_state": "FL",  
+            "venue_type": "Clinic",  
+            "linked_instructor": "Mark Wieland",  
+            "max_capacity": 30,  
+            "sku": "26025572",  
+            "training_credits": 12  
+        }  
+    },  
+    {  
+        "post_title": "Advanced Virtual Training - (Sep 20, 2025)",  
+        "post_type": "training_event",  
+        "post_status": "publish",  
+        "acf_fields": {  
+            "training_type": "Advanced Virtual",  
+            "training_mode": "Virtual",  
+            "training_level": "Advanced",  
+            "training_category": "CEU Course",  
+            "event_status": "Upcoming",  
+            "event_start_date": "2025-09-20",  
+            "event_end_date": "2025-09-21",  
+            "event_city": null,  
+            "event_state": null,  
+            "venue_type": null,  
+            "linked_instructor": "Mike Ploski",  
+            "max_capacity": 100,  
+            "sku": "27397358",  
+            "training_credits": 12  
+        }  
+    },  
+    {  
+        "post_title": "Essential Virtual Training - (Oct 11, 2025)",  
+        "post_type": "training_event",  
+        "post_status": "publish",  
+        "acf_fields": {  
+            "training_type": "Essential Virtual",  
+            "training_mode": "Virtual",  
+            "training_level": "Essential",  
+            "training_category": "Certification Bundle",  
+            "event_status": "Upcoming",  
+            "event_start_date": "2025-10-11",  
+            "event_end_date": "2025-10-12",  
+            "event_city": null,  
+            "event_state": null,  
+            "venue_type": null,  
+            "linked_instructor": "Greg Kelley",  
+            "max_capacity": 80,  
+            "sku": "27398821",  
+            "training_credits": 12  
+        }  
+    }  
+]
