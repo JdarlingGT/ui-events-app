@@ -23,3 +23,4 @@ export const fontVariables = cn(
   fontMono.variable,
   fontInter.variable
 );
+ 
