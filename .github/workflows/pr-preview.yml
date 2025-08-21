@@ -1,0 +1,139 @@
+name: PR Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, closed]
+
+concurrency:
+  group: pr-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    if: github.event.action != 'closed' && github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.0.6
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          elif [ -f pnpm-lock.yaml ]; then
+            PUPPETEER_SKIP_DOWNLOAD=true pnpm install
+          else
+            npm i --no-audit --no-fund
+          fi
+
+      - name: Build (if present)
+        run: |
+          if [ -f pnpm-lock.yaml ]; then
+            pnpm build --filter=shadcn && pnpm v4:build:static
+          else
+            npm run build --if-present
+          fi
+
+      - name: Detect build output directory
+        id: detect
+        shell: bash
+        run: |
+          set -euo pipefail
+          candidates=(
+            "apps/v4/out"
+            "apps/www/out"
+            "apps/v4/.next"
+            "apps/www/.next"
+            "dist"
+            "build"
+            "apps/*/dist"
+            "apps/*/build"
+            "packages/*/dist"
+            "packages/*/build"
+          )
+          found=""
+          for p in "${candidates[@]}"; do
+            for d in $p; do
+              if [ -d "$d" ]; then
+                found="$d"
+                break 2
+              fi
+            done
+          done
+          if [ -z "$found" ]; then
+            echo "No build output found. Please adjust the workflow to point to your output directory (e.g., dist or build)." >&2
+            ls -la
+            ls -la apps/v4/ || true
+            ls -la apps/www/ || true
+            exit 1
+          fi
+          echo "dir=$found" >> "$GITHUB_OUTPUT"
+
+      - name: Publish to gh-pages/pr-${{ github.event.pull_request.number }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ${{ steps.detect.outputs.dir }}
+          destination_dir: pr-${{ github.event.pull_request.number }}
+          keep_files: true
+
+      - name: Comment preview URL (sticky)
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          header: preview-url
+          message: |
+            PR Preview ready:
+            https://${{ github.repository_owner }}.github.io/${{ github.event.pull_request.base.repo.name }}/pr-${{ github.event.pull_request.number }}/
+
+  cleanup:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Remove preview directory
+        run: |
+          set -e
+          rm -rf "pr-${{ github.event.pull_request.number }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to clean up"
+            exit 0
+          fi
+          git commit -m "chore: remove preview for PR #${{ github.event.pull_request.number }}"
+          git push
