@@ -12,6 +12,12 @@ Visit http://ui.shadcn.com/docs to view the documentation.
 
 Please read the [contributing guide](/CONTRIBUTING.md).
 
+## Deploy Previews
+
+This repository includes automatic deploy previews for pull requests. See [DEPLOY_PREVIEW.md](/DEPLOY_PREVIEW.md) for setup and usage details.
+
+**Quick summary**: Every PR gets a unique preview URL at `https://[owner].github.io/[repo]/pr-[number]/`
+
 ## License
 
 Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
