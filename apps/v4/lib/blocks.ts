@@ -1,4 +1,5 @@
-"use server"
+// Server actions not supported in static export
+// "use server" - commented out for static export
 
 import { registryItemSchema } from "shadcn/schema"
 import { z } from "zod"

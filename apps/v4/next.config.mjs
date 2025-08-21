@@ -12,10 +12,7 @@ const nextConfig = {
   output: process.env.NEXT_OUTPUT_MODE === 'export' ? 'export' : undefined,
   trailingSlash: process.env.NEXT_OUTPUT_MODE === 'export',
   basePath: process.env.NEXT_BASE_PATH || '',
-  experimental: {
-    // Skip external font optimization for static export
-    optimizeFonts: process.env.NEXT_OUTPUT_MODE !== 'export',
-  },
+  generateBuildId: () => 'build',
   images: {
     remotePatterns: [
       {
@@ -28,68 +25,71 @@ const nextConfig = {
       },
     ],
   },
-  redirects() {
-    return [
-      {
-        source: "/components",
-        destination: "/docs/components",
-        permanent: true,
-      },
-      {
-        source: "/docs/primitives/:path*",
-        destination: "/docs/components/:path*",
-        permanent: true,
-      },
-      {
-        source: "/figma",
-        destination: "/docs/figma",
-        permanent: true,
-      },
-      {
-        source: "/docs/forms",
-        destination: "/docs/components/form",
-        permanent: false,
-      },
-      {
-        source: "/docs/forms/react-hook-form",
-        destination: "/docs/components/form",
-        permanent: false,
-      },
-      {
-        source: "/sidebar",
-        destination: "/docs/components/sidebar",
-        permanent: true,
-      },
-      {
-        source: "/react-19",
-        destination: "/docs/react-19",
-        permanent: true,
-      },
-      {
-        source: "/charts",
-        destination: "/charts/area",
-        permanent: true,
-      },
-      {
-        source: "/view/styles/:style/:name",
-        destination: "/view/:name",
-        permanent: true,
-      },
-      {
-        source: "/docs/:path*.mdx",
-        destination: "/docs/:path*.md",
-        permanent: true,
-      },
-    ]
-  },
-  rewrites() {
-    return [
-      {
-        source: "/docs/:path*.md",
-        destination: "/llm/:path*",
-      },
-    ]
-  },
+  // Only include redirects and rewrites for non-export builds
+  ...(process.env.NEXT_OUTPUT_MODE !== 'export' && {
+    redirects() {
+      return [
+        {
+          source: "/components",
+          destination: "/docs/components",
+          permanent: true,
+        },
+        {
+          source: "/docs/primitives/:path*",
+          destination: "/docs/components/:path*",
+          permanent: true,
+        },
+        {
+          source: "/figma",
+          destination: "/docs/figma",
+          permanent: true,
+        },
+        {
+          source: "/docs/forms",
+          destination: "/docs/components/form",
+          permanent: false,
+        },
+        {
+          source: "/docs/forms/react-hook-form",
+          destination: "/docs/components/form",
+          permanent: false,
+        },
+        {
+          source: "/sidebar",
+          destination: "/docs/components/sidebar",
+          permanent: true,
+        },
+        {
+          source: "/react-19",
+          destination: "/docs/react-19",
+          permanent: true,
+        },
+        {
+          source: "/charts",
+          destination: "/charts/area",
+          permanent: true,
+        },
+        {
+          source: "/view/styles/:style/:name",
+          destination: "/view/:name",
+          permanent: true,
+        },
+        {
+          source: "/docs/:path*.mdx",
+          destination: "/docs/:path*.md",
+          permanent: true,
+        },
+      ]
+    },
+    rewrites() {
+      return [
+        {
+          source: "/docs/:path*.md",
+          destination: "/llm/:path*",
+        },
+      ]
+    },
+  }),
 }
 
 const withMDX = createMDX({})

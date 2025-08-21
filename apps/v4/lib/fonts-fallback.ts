@@ -1,18 +1,21 @@
 import { cn } from "@/lib/utils"
 
-// Temporarily using system fonts for demo purposes
-// In production, you would conditionally load Google Fonts based on environment
+// For development and environments with network access, use Google Fonts
+// For static export and offline builds, use system fonts with CSS variables
 
 const fontSans = {
   variable: "--font-sans",
+  className: "",
 }
 
 const fontMono = {
-  variable: "--font-mono",
+  variable: "--font-mono", 
+  className: "",
 }
 
 const fontInter = {
   variable: "--font-inter",
+  className: "",
 }
 
 export const fontVariables = cn(
