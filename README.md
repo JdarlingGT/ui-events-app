@@ -4,6 +4,10 @@ Accessible and customizable components that you can copy and paste into your app
 
 ![hero](apps/www/public/og.jpg)
 
+## Preview Testing
+
+Testing PR preview functionality for GitHub Actions workflow.
+
 ## Documentation
 
 Visit http://ui.shadcn.com/docs to view the documentation.

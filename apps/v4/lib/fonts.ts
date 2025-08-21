@@ -6,21 +6,19 @@ import {
 
 import { cn } from "@/lib/utils"
 
-// Skip font loading for static export builds
-const isStaticExport = process.env.NEXT_OUTPUT_MODE === 'export'
-
-const fontSans = isStaticExport ? { variable: "--font-sans" } : FontSans({
+// Font loaders must be called unconditionally at module scope
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 })
 
-const fontMono = isStaticExport ? { variable: "--font-mono" } : FontMono({
+const fontMono = FontMono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ["400"],
 })
 
-const fontInter = isStaticExport ? { variable: "--font-inter" } : Inter({
+const fontInter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 })
