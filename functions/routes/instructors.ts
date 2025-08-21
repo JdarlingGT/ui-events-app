@@ -1,74 +1,45 @@
-import { Hono } from "hono";
-import { zValidator } from "@hono/zod-validator";
-import { instructorSchema, createInstructorSchema, updateInstructorSchema } from "../schemas/instructorSchema";
-import { cacheMiddleware } from "../middleware/cache";
+import { Hono } from 'hono';
 
-const app = new Hono();
+export const instructorsRoute = new Hono();
 
-// Get all instructors
-app.get("/", cacheMiddleware(60), (c) => {
-  // In a real implementation, you would fetch from a database
-  const instructors = [
-    {
-      id: "1",
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
-    },
-  ];
-  
-  return c.json({ instructors });
+instructorsRoute.get('/me', async (c) => {
+  // TODO: Implement logic to fetch current instructor's data
+  // const fluentCRMData = await fetchFluentCRMInstructorData();
+  return c.json({ id: 'inst1', name: 'John Doe', role: 'Instructor', /* ...fluentCRMData */ });
 });
 
-// Get instructor by ID
-app.get("/:id", cacheMiddleware(60), (c) => {
-  const id = c.req.param("id");
-  
-  // In a real implementation, you would fetch from a database
-  const instructor = {
-    id,
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-  };
-  
-  return c.json({ instructor });
+// Placeholder functions for external integrations
+async function fetchLearnDashStudentData(eventId: string) {
+  // TODO: Implement actual LearnDash API call to get student progress for an event
+  console.log(`Fetching LearnDash student data for event ${eventId}...`);
+  return { learnDashProgress: '50%' };
+}
+
+async function fetchFluentCRMInstructorData() {
+  // TODO: Implement actual FluentCRM API call to get instructor profile data
+  console.log('Fetching FluentCRM instructor data...');
+  return { fluentCRMTag: 'Instructor' };
+}
+
+async function fetchFluentCRMStudentData(eventId: string) {
+  // TODO: Implement actual FluentCRM API call to get student profiles for an event
+  console.log(`Fetching FluentCRM student data for event ${eventId}...`);
+  return { fluentCRMTag: 'Enrolled' };
+}
+
+instructorsRoute.get('/:eventId/roster', async (c) => {
+  const { eventId } = c.req.param();
+  // TODO: Implement logic to fetch student roster for a specific event
+  // const learnDashData = await fetchLearnDashStudentData(eventId);
+  // const fluentCRMData = await fetchFluentCRMStudentData(eventId);
+  return c.json([
+    { id: 'student1', name: 'Alice Smith', eventId, /* ...learnDashData, ...fluentCRMData */ },
+    { id: 'student2', name: 'Bob Johnson', eventId, /* ...learnDashData, ...fluentCRMData */ },
+  ]);
 });
 
-// Create instructor
-app.post("/", zValidator("json", createInstructorSchema), (c) => {
-  const data = c.req.valid("json");
-  
-  // In a real implementation, you would save to a database
-  const instructor = {
-    id: "new-id",
-    ...data,
-  };
-  
-  return c.json({ instructor }, 201);
+instructorsRoute.post('/:trainingId/roster-update', (c) => {
+  const { trainingId } = c.req.param();
+  // TODO: Implement logic to submit attendance and skills check results
+  return c.json({ message: `Roster for training ${trainingId} updated` });
 });
-
-// Update instructor
-app.put("/:id", zValidator("json", updateInstructorSchema), (c) => {
-  const id = c.req.param("id");
-  const data = c.req.valid("json");
-  
-  // In a real implementation, you would update in a database
-  const instructor = {
-    id,
-    ...data,
-  };
-  
-  return c.json({ instructor });
-});
-
-// Delete instructor
-app.delete("/:id", (c) => {
-  const id = c.req.param("id");
-  
-  // In a real implementation, you would delete from a database
-  
-  return c.json({ message: `Instructor ${id} deleted` });
-});
-
-export { app as instructorsRoute };

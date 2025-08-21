@@ -16,3 +16,11 @@ NODE_ENV = "development"
 [env.production.vars]
 # Production environment variables
 NODE_ENV = "production"
+
+# Serve static assets from frontend/dist for non-/api routes
+[site]
+bucket = "./frontend/dist"
+
+# Route configuration
+[[routes]]
+pattern = "/api/*"

@@ -10,13 +10,20 @@
   "scripts": {
     "dev": "concurrently \"pnpm --filter frontend dev\" \"pnpm --filter functions dev\"",
     "build": "pnpm --filter frontend build && pnpm --filter functions build",
-    "test": "pnpm --filter frontend test && pnpm --filter functions test",
-    "lint": "pnpm --filter frontend lint && pnpm --filter functions lint"
+    "typecheck": "pnpm --filter frontend typecheck && pnpm --filter functions typecheck",
+    "lint": "pnpm --filter frontend lint && pnpm --filter functions lint",
+    "format": "prettier --write .",
+    "preview": "pnpm --filter frontend preview",
+    "test": "pnpm --filter frontend test && pnpm --filter functions test"
   },
   "devDependencies": {
     "concurrently": "^8.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "hono": "^4.9.2",
+    "zod": "^4.0.17"
   }
 }

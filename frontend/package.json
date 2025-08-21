@@ -8,6 +8,7 @@
     "dev:frontend": "vite",
     "dev:worker": "echo 'Worker process would run here'",
     "build": "tsc && vite build",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -39,7 +40,8 @@
     "recharts": "^3.1.2",
     "shadcn-ui": "^0.9.5",
     "tailwind-merge": "^3.3.1",
-    "tremor": "^0.0.1"
+    "tremor": "^0.0.1",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
