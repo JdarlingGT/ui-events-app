@@ -1,29 +1,20 @@
-import {
-  Geist_Mono as FontMono,
-  Geist as FontSans,
-  Inter,
-} from "next/font/google"
-
 import { cn } from "@/lib/utils"
 
-// Skip font loading for static export builds
-const isStaticExport = process.env.NEXT_OUTPUT_MODE === 'export'
-
-const fontSans = isStaticExport ? { variable: "--font-sans" } : FontSans({
-  subsets: ["latin"],
+// For static export builds, use system font fallbacks
+const fontSans = {
   variable: "--font-sans",
-})
+  className: "",
+}
 
-const fontMono = isStaticExport ? { variable: "--font-mono" } : FontMono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400"],
-})
+const fontMono = {
+  variable: "--font-mono", 
+  className: "",
+}
 
-const fontInter = isStaticExport ? { variable: "--font-inter" } : Inter({
-  subsets: ["latin"],
+const fontInter = {
   variable: "--font-inter",
-})
+  className: "",
+}
 
 export const fontVariables = cn(
   fontSans.variable,

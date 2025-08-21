@@ -12,8 +12,14 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const cookieStore = await cookies()
-  const defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
+  // For static export, default to open sidebar
+  const isStaticExport = process.env.NEXT_OUTPUT_MODE === 'export'
+  let defaultOpen = true
+  
+  if (!isStaticExport) {
+    const cookieStore = await cookies()
+    defaultOpen = cookieStore.get("sidebar_state")?.value === "true"
+  }
 
   return (
     <main className="[--header-height:calc(theme(spacing.14))]">

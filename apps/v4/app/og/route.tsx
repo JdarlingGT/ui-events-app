@@ -1,5 +1,8 @@
 import { ImageResponse } from "next/og"
 
+export const dynamic = "force-static"
+export const revalidate = false
+
 async function loadAssets(): Promise<
   { name: string; data: Buffer; weight: 400 | 600; style: "normal" }[]
 > {
@@ -36,9 +39,20 @@ async function loadAssets(): Promise<
 }
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const title = searchParams.get("title")
-  const description = searchParams.get("description")
+  // For static export, use default values
+  const isStaticExport = process.env.NEXT_OUTPUT_MODE === 'export'
+  let title: string | null = null
+  let description: string | null = null
+  
+  if (!isStaticExport) {
+    const { searchParams } = new URL(request.url)
+    title = searchParams.get("title")
+    description = searchParams.get("description")
+  } else {
+    // Default values for static export
+    title = "shadcn/ui"
+    description = "A set of beautifully designed components"
+  }
 
   const [fonts] = await Promise.all([loadAssets()])
 

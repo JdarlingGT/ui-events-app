@@ -29,6 +29,11 @@ const nextConfig = {
     ],
   },
   redirects() {
+    // Disable redirects for static export
+    if (process.env.NEXT_OUTPUT_MODE === 'export') {
+      return []
+    }
+    
     return [
       {
         source: "/components",
@@ -83,6 +88,11 @@ const nextConfig = {
     ]
   },
   rewrites() {
+    // Disable rewrites for static export
+    if (process.env.NEXT_OUTPUT_MODE === 'export') {
+      return []
+    }
+    
     return [
       {
         source: "/docs/:path*.md",
